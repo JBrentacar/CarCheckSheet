@@ -1,0 +1,66 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.hidden {
+  display: none;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#canvas-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.canvas-item {
+  margin: 10px;
+  position: relative;
+}
+
+.canvas-item canvas {
+  border: 1px solid #000;
+}
+
+#signature-pad {
+  width: 100%;
+  height: auto;
+}
