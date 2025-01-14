@@ -13,24 +13,23 @@ function selectDevice(device) {
 }
 
 // フォーム入力後
-document.addEventListener('DOMContentLoaded', () => {
-  // フォームの入力を監視
-  const carNumberInput = document.getElementById('car-number');
-  const managementNumberInput = document.getElementById('management-number');
-
-  carNumberInput.addEventListener('input', checkForm);
-  managementNumberInput.addEventListener('input', checkForm);
-});
-
-function checkForm() {
+function showCanvasSection() {
   const carNumber = document.getElementById('car-number').value;
   const managementNumber = document.getElementById('management-number').value;
 
-  if (carNumber.length === 4 && /^\d{4}$/.test(carNumber) && managementNumber.trim() !== '') {
-    document.getElementById('form-section').classList.add('hidden');
-    document.getElementById('canvas-section').classList.remove('hidden');
-    setupCanvas();
+  if (!/^\d{4}$/.test(carNumber)) {
+    alert('車両ナンバーは4桁の数字で入力してください。');
+    return;
   }
+
+  if (managementNumber.trim() === '') {
+    alert('管理番号を入力してください。');
+    return;
+  }
+
+  document.getElementById('form-section').classList.add('hidden');
+  document.getElementById('canvas-section').classList.remove('hidden');
+  setupCanvas();
 }
 
 // キャンバスのセットアップ
@@ -50,15 +49,12 @@ function setupCanvas() {
       div.className = 'canvas-item';
       const canvas = document.createElement('canvas');
       canvas.id = `canvas-${img}`;
-      canvas.width = 300;
-      canvas.height = 400;
+      canvas.width = 1080;
+      canvas.height = 1080;
       div.appendChild(canvas);
       canvasContainer.appendChild(div);
       setupFabricCanvas(canvas.id, img);
     });
-    document.getElementById('canvas-section').classList.remove('hidden');
-    document.getElementById('signature-section').classList.remove('hidden');
-    document.getElementById('complete-section').classList.remove('hidden');
   }
 }
 
@@ -71,8 +67,8 @@ function loadImage(imageName) {
   div.className = 'canvas-item';
   const canvas = document.createElement('canvas');
   canvas.id = 'main-canvas';
-  canvas.width = 300;
-  canvas.height = 400;
+  canvas.width = 1080;
+  canvas.height = 1080;
   div.appendChild(canvas);
   canvasContainer.appendChild(div);
 
@@ -81,12 +77,14 @@ function loadImage(imageName) {
 
 // Fabric.js を使ったキャンバスのセットアップ
 function setupFabricCanvas(canvasId, imageName) {
-  const canvas = new fabric.Canvas(canvasId);
+  const canvas = new fabric.Canvas(canvasId, {
+    selection: false
+  });
   fabric.Image.fromURL(`images/${imageName}`, function(img) {
-    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-      scaleX: canvas.width / img.width,
-      scaleY: canvas.height / img.height
-    });
+    // 画像をキャンバスサイズに合わせてスケーリング
+    img.scaleToWidth(canvas.width);
+    img.scaleToHeight(canvas.height);
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
   });
 
   // 描画モードを有効にする
@@ -113,6 +111,22 @@ window.onload = function() {
 // サインのクリア
 function clearSignature() {
   signaturePad.clear();
+}
+
+// サインの保存（未使用ですが、必要に応じて機能追加可能）
+function saveSignature() {
+  if (signaturePad.isEmpty()) {
+    alert('サインを記入してください。');
+  } else {
+    const dataURL = signaturePad.toDataURL();
+    // 必要に応じてデータURLを保存
+  }
+}
+
+// 完了セクションの表示
+function showCompleteSection() {
+  document.getElementById('signature-section').classList.add('hidden');
+  document.getElementById('complete-section').classList.remove('hidden');
 }
 
 // PDF生成とダウンロード
@@ -145,7 +159,7 @@ function generatePDF() {
 
   if (!signaturePad.isEmpty()) {
     const dataURL = signaturePad.toDataURL();
-    doc.addImage(dataURL, 'PNG', 20, y + 20, 50, 30);
+    doc.addImage(dataURL, 'PNG', 20, y + 20, 100, 50);
   }
 
   doc.save('car_checksheet.pdf');
