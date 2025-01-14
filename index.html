@@ -34,6 +34,7 @@
         管理番号:
         <input type="text" id="management-number" required>
       </label>
+      <button onclick="showCanvasSection()">次へ</button>
     </div>
     
     <!-- 画像キャンバス -->
@@ -46,14 +47,17 @@
         <button onclick="loadImage('rear.png')">リア</button>
         <button onclick="loadImage('right.png')">右側</button>
       </div>
+      <button onclick="showSignatureSection()">サインへ</button>
     </div>
     
     <!-- サインパッド -->
     <div id="signature-section" class="section hidden">
       <h2>サインを記入してください</h2>
-      <canvas id="signature-pad" width="300" height="150" style="border:1px solid #000;"></canvas>
+      <canvas id="signature-pad" width="600" height="200" style="border:1px solid #000;"></canvas>
       <br>
       <button onclick="clearSignature()">クリア</button>
+      <button onclick="saveSignature()">保存</button>
+      <button onclick="showCompleteSection()">完了へ</button>
     </div>
     
     <!-- 完了ボタン -->
