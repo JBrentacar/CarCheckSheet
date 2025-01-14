@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>レンタカー カーチェックシート</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fabric.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js" integrity="sha512-MCTtuvGpZc5UL2uYdgrYk3bOjy+pswZzgVxKTRXtbpuYkMjuWFKYefQ1UyScKM1Uk93jOeaMMExD+hCXrVvR0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Signature Pad CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.0.0/signature_pad.umd.min.js" integrity="sha512-Pgo8lt+Y6q84fiS3IBSY/uCFkgYuOIBZsuEYc6X2KAMrqAyfMra1PR7eW4CqqX2U9vKftjq3ce49H3Kg3ED24g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- jsPDF CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-/wTx2NsBhjzL1X/7fjvIUCX+uL4keCjFfqxpjLcIgexHn9jIEn2N+t0E+jCF0Ul4Qq6Zsgn40FEIChE5q2YGUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>レンタカー カーチェックシート</h1>
+    
+    <!-- デバイス選択 -->
+    <div id="device-selector" class="section">
+      <h2>デバイスを選択してください</h2>
+      <button onclick="selectDevice('mobile')">スマートフォン</button>
+      <button onclick="selectDevice('tablet')">タブレット</button>
+    </div>
+    
+    <!-- フォーム -->
+    <div id="form-section" class="section hidden">
+      <h2>情報を入力してください</h2>
+      <label>
+        車両ナンバー（4桁）:
+        <input type="text" id="car-number" maxlength="4" pattern="\d{4}" required>
+      </label>
+      <label>
+        管理番号:
+        <input type="text" id="management-number" required>
+      </label>
+    </div>
+    
+    <!-- 画像キャンバス -->
+    <div id="canvas-section" class="section hidden">
+      <h2>傷を記入してください</h2>
+      <div id="canvas-container"></div>
+      <div id="image-buttons" class="hidden">
+        <button onclick="loadImage('front.png')">フロント</button>
+        <button onclick="loadImage('left.png')">左側</button>
+        <button onclick="loadImage('rear.png')">リア</button>
+        <button onclick="loadImage('right.png')">右側</button>
+      </div>
+    </div>
+    
+    <!-- サインパッド -->
+    <div id="signature-section" class="section hidden">
+      <h2>サインを記入してください</h2>
+      <canvas id="signature-pad" width="300" height="150" style="border:1px solid #000;"></canvas>
+      <br>
+      <button onclick="clearSignature()">クリア</button>
+    </div>
+    
+    <!-- 完了ボタン -->
+    <div id="complete-section" class="section hidden">
+      <button onclick="generatePDF()">完了 & PDFダウンロード</button>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
