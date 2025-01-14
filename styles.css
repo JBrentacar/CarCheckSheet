@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   background-color: #fff;
   padding: 20px;
@@ -58,9 +58,19 @@ button {
 
 .canvas-item canvas {
   border: 1px solid #000;
+  width: 100%;
+  height: auto;
 }
 
 #signature-pad {
   width: 100%;
   height: auto;
+}
+
+@media (max-width: 768px) {
+  /* スマートフォン向けのスタイル調整 */
+  #signature-pad {
+    width: 100%;
+    height: auto;
+  }
 }
